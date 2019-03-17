@@ -196,7 +196,7 @@ general:
    # /island will always create an island if one does not exist
    # If the control panel is not used, then /island will teleport the player home
    # Players can change this setting using /island cp on or /island cp off
-   usecontrolpanel: false
+   usecontrolpanel: true
 
    # Create Nether - if this is false, the nether world will not be made and access to
    # the nether will not occur. Other plugins may still enable
@@ -222,7 +222,7 @@ general:
    # Calculate level on login
    # If true, the plugin will run the level command for the player when they login
    # If the command is busy, it will fail silently
-   loginlevel: false
+   loginlevel: true
 
    #Commands to run when the player resets their island (uncomment and customize)
    # [player] is the player name of who is reseting
@@ -627,7 +627,7 @@ general:
    # in chat, like in older versions (up to V3.0.3.3), which can
    # be a little spammy.
    # Recommendation is to keep this false.
-   islandtopteninchat: false
+   islandtopteninchat: true
    
    # Toggle Magic Cobblestone Generator
    # If set to true, a cobble generator will not just generate cobblestone, but
@@ -986,7 +986,7 @@ schematicsection:
     # This is the default nether island - do not remove this section!
     nether:
       # Hide or show this schematic to players in the GUI
-      show: false
+      show: true
       icon: NETHERRACK
       # If the biome is HELL it is assumed this island goes in the Nether
       biome: HELL
