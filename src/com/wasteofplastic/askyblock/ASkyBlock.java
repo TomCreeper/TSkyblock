@@ -151,11 +151,11 @@ public class ASkyBlock extends JavaPlugin {
      */
     public static World getIslandWorld() {
         if (islandWorld == null) {
-            //Bukkit.getLogger().info("DEBUG worldName = " + Settings.worldName);
+            Bukkit.getLogger().info("DEBUG worldName = " + Settings.worldName);
             //
             if (Settings.useOwnGenerator) {
                 islandWorld = Bukkit.getServer().getWorld(Settings.worldName);
-                //Bukkit.getLogger().info("DEBUG world is " + islandWorld);
+                Bukkit.getLogger().info("DEBUG world is " + islandWorld);
             } else {
                 islandWorld = WorldCreator.name(Settings.worldName).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new ChunkGeneratorWorld())
                         .createWorld();
@@ -282,7 +282,7 @@ public class ASkyBlock extends JavaPlugin {
         try {
             clazz = Class.forName("org.bukkit.event.player.PlayerInteractAtEntityEvent");
         } catch (Exception e) {
-            //getLogger().info("No PlayerInteractAtEntityEvent found.");
+            getLogger().info("No PlayerInteractAtEntityEvent found.");
             clazz = null;
         }
         if (clazz != null) {
@@ -336,13 +336,13 @@ public class ASkyBlock extends JavaPlugin {
         // startup and so key variables are
         // not known to the server. Instead it is run one tick after startup.
         // If the world exists, load it, even without the generator
-        /*
+        
 	if (Settings.createNether) {
 	    Bukkit.getWorld(Settings.worldName + "_nether");
 	}
 	if (Bukkit.getWorld(Settings.worldName) == null) {
 	    islandWorld = WorldCreator.name(Settings.worldName).type(WorldType.FLAT).environment(World.Environment.NORMAL).createWorld();
-	}*/
+	}
         // Get challenges
         challenges = new Challenges(this);
         // Set and make the player's directory if it does not exist and then
@@ -597,7 +597,7 @@ public class ASkyBlock extends JavaPlugin {
      */
     public void deletePlayerIsland(final UUID player, boolean removeBlocks) {
         // Removes the island
-        //getLogger().info("DEBUG: deleting player island");
+        getLogger().info("DEBUG: deleting player island");
         CoopPlay.getInstance().clearAllIslandCoops(player);
         getWarpSignsListener().removeWarp(player);
         Island island = grid.getIsland(player);
@@ -606,7 +606,7 @@ public class ASkyBlock extends JavaPlugin {
             if (removeBlocks) {
                 grid.removePlayersFromIsland(island, player);
                 new DeleteIslandChunk(this, island);
-                //new DeleteIslandByBlock(this, island);
+                new DeleteIslandByBlock(this, island);
             } else {
                 island.setLocked(false);
                 grid.setIslandOwner(island, null);
@@ -630,10 +630,10 @@ public class ASkyBlock extends JavaPlugin {
      * @return the challenges
      */
     public Challenges getChallenges() {
-        /*
+        
 	if (challenges == null) {
 	    challenges = new Challenges(this);
-	}*/
+	}
         return challenges;
     }
 
@@ -646,10 +646,10 @@ public class ASkyBlock extends JavaPlugin {
      * @return the grid
      */
     public GridManager getGrid() {
-        /*
+        
 	if (grid == null) {
 	    grid = new GridManager(this);
-	}*/
+	}
         return grid;
     }
 
@@ -657,10 +657,10 @@ public class ASkyBlock extends JavaPlugin {
      * @return the players
      */
     public PlayerCache getPlayers() {
-        /*
+        
 	if (players == null) {
 	    players = new PlayerCache(this);
-	}*/
+	}
         return players;
     }
 
@@ -743,9 +743,9 @@ public class ASkyBlock extends JavaPlugin {
         warpSignsListener = new WarpSigns(this);
         manager.registerEvents(warpSignsListener, this);
         // Control panel - for future use
-        // manager.registerEvents(new ControlPanel(), this);
+         manager.registerEvents(new ControlPanel(), this);
         // Change names of inventory items
-        //manager.registerEvents(new AcidInventory(this), this);
+        manager.registerEvents(new AcidInventory(this), this);
         // Schematics panel
         schematicsPanel = new SchematicsPanel(this);
         manager.registerEvents(schematicsPanel, this);
@@ -773,8 +773,8 @@ public class ASkyBlock extends JavaPlugin {
      */
     @SuppressWarnings("deprecation")
     public void resetPlayer(Player player) {
-        // getLogger().info("DEBUG: clear inventory = " +
-        // Settings.clearInventory);
+         getLogger().info("DEBUG: clear inventory = " +
+         Settings.clearInventory);
         if (Settings.clearInventory
                 && (player.getWorld().getName().equalsIgnoreCase(Settings.worldName) || player.getWorld().getName()
                         .equalsIgnoreCase(Settings.worldName + "_nether"))) {
