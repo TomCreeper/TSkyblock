@@ -151,7 +151,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         File schematicFile = new File(schematicFolder, "island.schematic");
         File netherFile = new File(schematicFolder, "nether.schematic");
         if (!schematicFile.exists()) {
-            //plugin.getLogger().info("Default schematic does not exist...");
+            plugin.getLogger().info("Default schematic does not exist...");
             // Only copy if the default exists
             if (plugin.getResource("schematics/island.schematic") != null) {
                 plugin.getLogger().info("Default schematic does not exist, saving it...");
@@ -249,10 +249,10 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                 try {
                     Schematic newSchem = null;
                     // Check the file exists
-                    //plugin.getLogger().info("DEBUG: schematics." + key + ".filename" );
+                    plugin.getLogger().info("DEBUG: schematics." + key + ".filename" );
                     String filename = schemSection.getString("schematics." + key + ".filename","");
                     if (!filename.isEmpty()) {
-                        //plugin.getLogger().info("DEBUG: filename = " + filename);
+                        plugin.getLogger().info("DEBUG: filename = " + filename);
                         // Check if this file exists or if it is in the jar
                         schematicFile = new File(schematicFolder, filename);
                         // See if the file exists
@@ -263,9 +263,9 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             newSchem = new Schematic(plugin, schematicFile);
                         }
                     } else {
-                        //plugin.getLogger().info("DEBUG: filename is empty");
+                        plugin.getLogger().info("DEBUG: filename is empty");
                         if (key.equalsIgnoreCase("default")) {
-                            //Øplugin.getLogger().info("DEBUG: key is default, so use this one");
+                            plugin.getLogger().info("DEBUG: key is default, so use this one");
                             newSchem = schematics.get("default");
                         } else {
                             plugin.getLogger().severe("Schematic " + key + " does not have a filename. Skipping!");
@@ -394,7 +394,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             ItemStack[] tempChest = new ItemStack[chestItems.size()];
                             int i = 0;
                             for (String chestItemString : chestItems) {
-                                //plugin.getLogger().info("DEBUG: chest item = " + chestItemString);
+                                plugin.getLogger().info("DEBUG: chest item = " + chestItemString);
                                 try {
                                     String[] amountdata = chestItemString.split(":");
                                     if (amountdata[0].equals("POTION")) {
@@ -438,7 +438,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                     plugin.getLogger().info("Potential material types are: ");
                                     for (Material c : Material.values())
                                         plugin.getLogger().info(c.name());
-                                    // e.printStackTrace();
+                                     e.printStackTrace();
                                 }
                             }
 
@@ -465,7 +465,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 plugin.getLogger().severe("Problem with schematic '" + name + "'. Spawn block '" + spawnBlock + "' is unknown. Skipping...");
                             }
                         } else {
-                            // plugin.getLogger().info("No spawn block found");
+                             plugin.getLogger().info("No spawn block found");
                         }
                         // Level handicap
                         newSchem.setLevelHandicap(schemSection.getInt("schematics." + key + ".levelHandicap", 0));
@@ -528,7 +528,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             }
             if (plugin.getPlayers().getHomeLocation(teamLeader,1) == null) {
                 plugin.getPlayers().setHomeLocation(playerUUID, plugin.getPlayers().getIslandLocation(teamLeader));
-                // plugin.getLogger().info("DEBUG: Setting player's home to the team island location");
+                 plugin.getLogger().info("DEBUG: Setting player's home to the team island location");
             }
 
             // If the leader's member list does not contain player then add it
@@ -576,7 +576,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (!plugin.getPlayers().setLeaveTeam(playerUUID)) {
                 return false;
             }
-            //plugin.getPlayers().setHomeLocation(player, null);
+            plugin.getPlayers().setHomeLocation(player, null);
             plugin.getPlayers().clearHomeLocations(playerUUID);
             plugin.getPlayers().setIslandLocation(playerUUID, null);
             plugin.getPlayers().setTeamIslandLocation(playerUUID, null);
@@ -628,12 +628,12 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
     public List<Schematic> getSchematics(Player player, boolean ignoreNoPermission) {
         List<Schematic> result = new ArrayList<Schematic>();
         // Find out what schematics this player can choose from
-        //Bukkit.getLogger().info("DEBUG: Checking schematics for " + player.getName());
+        Bukkit.getLogger().info("DEBUG: Checking schematics for " + player.getName());
         for (Schematic schematic : schematics.values()) {
-            //Bukkit.getLogger().info("DEBUG: schematic name is '"+ schematic.getName() + "'");
-            //Bukkit.getLogger().info("DEBUG: perm is " + schematic.getPerm());
+            Bukkit.getLogger().info("DEBUG: schematic name is '"+ schematic.getName() + "'");
+            Bukkit.getLogger().info("DEBUG: permission is " + schematic.getPerm());
             if ((!ignoreNoPermission && schematic.getPerm().isEmpty()) || VaultHelper.checkPerm(player, schematic.getPerm())) {
-                //Bukkit.getLogger().info("DEBUG: player can use this schematic");
+                Bukkit.getLogger().info("DEBUG: player can use this schematic");
                 // Only add if it's visible
                 if (schematic.isVisible()) {
                     // Check if it's a nether island, but the nether is not enables
@@ -672,7 +672,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
      * @param player
      */
     public void newIsland(final Player player) {
-        //plugin.getLogger().info("DEBUG: Making default island");
+        plugin.getLogger().info("DEBUG: Making default island");
         newIsland(player, schematics.get("default"));
     }
 
@@ -689,9 +689,9 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (!plugin.getPlayers().hasIsland(playerUUID)) {
             firstTime = true;
         }
-        //plugin.getLogger().info("DEBUG: finding island location");
+        plugin.getLogger().info("DEBUG: finding island location");
         Location next = getNextIsland(player.getUniqueId());
-        //plugin.getLogger().info("DEBUG: found " + next);
+        plugin.getLogger().info("DEBUG: found " + next);
         // Set the player's parameters to this island
         plugin.getPlayers().setHasIsland(playerUUID, true);
         // Clear any old home locations (they should be clear, but just in case)
@@ -700,7 +700,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         plugin.getPlayers().setIslandLocation(playerUUID, next);
 
         // Set the biome
-        //BiomesPanel.setIslandBiome(next, schematic.getBiome());
+        BiomesPanel.setIslandBiome(next, schematic.getBiome());
         // Teleport to the new home
         if (schematic.isPlayerSpawn()) {
             // Set home and teleport
@@ -711,12 +711,12 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
 
         // Sets a flag to temporarily disable cleanstone generation
         plugin.setNewIsland(true);
-        //plugin.getBiomes();
+        plugin.getBiomes();
 
         // Create island based on schematic
         if (schematic != null) {
-            //plugin.getLogger().info("DEBUG: pasting schematic " + schematic.getName() + " " + schematic.getPerm());
-            //plugin.getLogger().info("DEBUG: nether world is " + ASkyBlock.getNetherWorld());
+            plugin.getLogger().info("DEBUG: pasting schematic " + schematic.getName() + " " + schematic.getPerm());
+            plugin.getLogger().info("DEBUG: nether world is " + ASkyBlock.getNetherWorld());
             // Paste the starting island. If it is a HELL biome, then we start in the Nether
             if (Settings.createNether && schematic.isInNether() && Settings.newNether && ASkyBlock.getNetherWorld() != null) {
                 // Nether start
@@ -732,24 +732,24 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                 schematic.pasteSchematic(next, player, true, firstTime ? PasteReason.NEW_ISLAND: PasteReason.RESET);
             } else {
                 // Over world start
-                //plugin.getLogger().info("DEBUG: pasting");
+                plugin.getLogger().info("DEBUG: pasting");
                 //long timer = System.nanoTime();
                 // Paste the island and teleport the player home
                 schematic.pasteSchematic(next, player, true, firstTime ? PasteReason.NEW_ISLAND: PasteReason.RESET);
-                //double diff = (System.nanoTime() - timer)/1000000;
-                //plugin.getLogger().info("DEBUG: nano time = " + diff + " ms");
-                //plugin.getLogger().info("DEBUG: pasted overworld");
+                double diff = (System.nanoTime() - timer)/1000000;
+                plugin.getLogger().info("DEBUG: nano time = " + diff + " ms");
+                plugin.getLogger().info("DEBUG: pasted overworld");
                 if (Settings.createNether && Settings.newNether && ASkyBlock.getNetherWorld() != null) {
                     // Paste the other world schematic
                     final Location netherLoc = next.toVector().toLocation(ASkyBlock.getNetherWorld());
                     if (schematic.getPartnerName().isEmpty()) {
                         // This will paste the over world schematic again
-                        //plugin.getLogger().info("DEBUG: pasting nether");
+                        plugin.getLogger().info("DEBUG: pasting nether");
                         pastePartner(schematic, netherLoc, player);
-                        //plugin.getLogger().info("DEBUG: pasted nether");
+                        plugin.getLogger().info("DEBUG: pasted nether");
                     } else {
                         if (schematics.containsKey(schematic.getPartnerName())) {
-                            //plugin.getLogger().info("DEBUG: pasting partner");
+                            plugin.getLogger().info("DEBUG: pasting partner");
                             // A partner schematic is available
                             pastePartner(schematics.get(schematic.getPartnerName()),netherLoc, player);
                         } else {
@@ -811,7 +811,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         // Done - fire event
         final IslandNewEvent event = new IslandNewEvent(player,schematic, myIsland);
         plugin.getServer().getPluginManager().callEvent(event);
-        //plugin.getLogger().info("DEBUG: Done! " + (System.nanoTime()- time) * 0.000001);
+        plugin.getLogger().info("DEBUG: Done! " + (System.nanoTime()- time) * 0.000001);
     }
 
     /**
@@ -890,7 +890,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
      * @return Location of next free island
      */
     private Location nextGridLocation(final Location lastIsland) {
-        // plugin.getLogger().info("DEBUG nextIslandLocation");
+         plugin.getLogger().info("DEBUG nextIslandLocation");
         final int x = lastIsland.getBlockX();
         final int z = lastIsland.getBlockZ();
         final Location nextPos = lastIsland;
@@ -1196,7 +1196,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                 }
                 return true;
             } else if (split[0].equalsIgnoreCase("make")) {
-                //plugin.getLogger().info("DEBUG: /is make called");
+                plugin.getLogger().info("DEBUG: /is make called");
                 if (!pendingNewIslandSelection.contains(playerUUID)) {
                     Util.sendMessage(player, ChatColor.RED + plugin.myLocale().errorUnknownCommand);
                     return false;
@@ -1237,11 +1237,11 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).errorNoPermission);
                         return true;
                     }
-                    // plugin.getLogger().info("DEBUG: perms ok");
+                     plugin.getLogger().info("DEBUG: permissions ok");
                     // Find out which island they want to lock
                     Island island = plugin.getGrid().getIsland(playerUUID);
                     if (island == null) {
-                        // plugin.getLogger().info("DEBUG: player has no island in grid");
+                         plugin.getLogger().info("DEBUG: player has no island in grid");
                         // Player has no island in the grid
                         Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).errorNoIsland);
                         return true;
@@ -1316,12 +1316,12 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     Util.sendMessage(player, ChatColor.GOLD + "(c) 2014 - 2018 by tastybento, Poslovitch");
                     return true;
                     // Spawn enderman
-                    // Enderman enderman = (Enderman)
-                    // player.getWorld().spawnEntity(player.getLocation().add(new
-                    // Vector(5,0,5)), EntityType.ENDERMAN);
-                    // enderman.setCustomName("TastyBento's Ghost");
-                    // enderman.setCarriedMaterial(new
-                    // MaterialData(Material.GRASS));
+                     Enderman enderman = (Enderman)
+                     player.getWorld().spawnEntity(player.getLocation().add(new
+                     Vector(5,0,5)), EntityType.ENDERMAN);
+                     enderman.setCustomName("TastyBento's Ghost");
+                     enderman.setCarriedMaterial(new
+                     MaterialData(Material.GRASS));
                 }
 
             if (split[0].equalsIgnoreCase("controlpanel") || split[0].equalsIgnoreCase("cp")) {
@@ -1467,7 +1467,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     // Show a schematic panel if the player has a choice
                     // Get the schematics that this player is eligible to use
                     List<Schematic> schems = getSchematics(player, false);
-                    //plugin.getLogger().info("DEBUG: size of schematics for this player = " + schems.size());
+                    plugin.getLogger().info("DEBUG: size of schematics for this player = " + schems.size());
                     Island oldIsland = plugin.getGrid().getIsland(player.getUniqueId());
                     if (schems.isEmpty()) {
                         // No schematics - use default island
@@ -1613,7 +1613,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                 if (VaultHelper.checkPerm(player, Settings.PERMPREFIX + "island.biomes")) {
                     Util.sendMessage(player, plugin.myLocale(player.getUniqueId()).helpColor + "/" + label + " biomes: " + ChatColor.WHITE + plugin.myLocale(player.getUniqueId()).islandhelpBiome);
                 }
-                // if (!Settings.allowPvP) {
+                 if (!Settings.allowPvP) {
                 if (VaultHelper.checkPerm(player, Settings.PERMPREFIX + "island.expel")) {
                     Util.sendMessage(player, plugin.myLocale(player.getUniqueId()).helpColor + "/" + label + " expel <player>: " + ChatColor.WHITE + plugin.myLocale(player.getUniqueId()).islandhelpExpel);
                 }
@@ -1694,7 +1694,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).errorWrongWorld);
                         return true;
                     }
-                    // Util.sendMessage(player, plugin.myLocale(player.getUniqueId()).helpColor + "[Biomes]");
+                     Util.sendMessage(player, plugin.myLocale(player.getUniqueId()).helpColor + "[Biomes]");
                     Inventory inv = plugin.getBiomes().getBiomePanel(player);
                     if (inv != null) {
                         player.openInventory(inv);
@@ -1942,12 +1942,12 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             leavingPlayers.remove(playerUUID);
                             // Remove from team
                             if (!removePlayerFromTeam(playerUUID, teamLeader)) {
-                                //Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).leaveerrorYouCannotLeaveIsland);
+                                Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).leaveerrorYouCannotLeaveIsland);
                                 // If this is canceled, fail silently
                                 return true;
                             }
                             // Clear any coop inventories
-                            // CoopPlay.getInstance().returnAllInventories(player);
+                             CoopPlay.getInstance().returnAllInventories(player);
                             // Remove any of the target's coop invitees and grab
                             // their stuff
                             CoopPlay.getInstance().clearMyInvitedCoops(player);
@@ -1969,9 +1969,9 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 plugin.getMessages().setMessage(teamLeader, ChatColor.RED + plugin.myLocale(teamLeader).leavenameHasLeftYourIsland.replace("[name]", player.getName()));
                             }
                             // Check if the size of the team is now 1
-                            // teamMembers.remove(playerUUID);
+                             teamMembers.remove(playerUUID);
                             if (teamMembers.size() < 2) {
-                                // plugin.getLogger().info("DEBUG: Party is less than 2 - removing leader from team");
+                                 plugin.getLogger().info("DEBUG: Party is less than 2 - removing leader from team");
                                 if (!removePlayerFromTeam(teamLeader, teamLeader)) {
                                     // If this is canceled, return silently.
                                     return true;
@@ -2100,7 +2100,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     }
                 } else
                     if (split[0].equalsIgnoreCase("make")) {
-                        //plugin.getLogger().info("DEBUG: /is make '" + split[1] + "' called");
+                        plugin.getLogger().info("DEBUG: /is make '" + split[1] + "' called");
                         if (!pendingNewIslandSelection.contains(playerUUID)) {
                             Util.sendMessage(player, ChatColor.RED + plugin.myLocale(playerUUID).errorUnknownCommand);
                             return true;
@@ -2112,7 +2112,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             return true;
                         } else {
                             Schematic schematic = schematics.get(split[1]);
-                            // Check perm again
+                            // Check permission again
                             if (schematic.getPerm().isEmpty() || VaultHelper.checkPerm(player, schematic.getPerm())) {
                                 Island oldIsland = plugin.getGrid().getIsland(player.getUniqueId());
                                 newIsland(player,schematic);
@@ -2172,7 +2172,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 int number = 1;
                                 try {
                                     number = Integer.valueOf(split[1]);
-                                    //plugin.getLogger().info("DEBUG: number = " + number);
+                                    plugin.getLogger().info("DEBUG: number = " + number);
                                     if (number < 1) {
                                         plugin.getGrid().homeTeleport(player,1);
                                     } else {
@@ -2227,7 +2227,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             if (VaultHelper.checkPerm(player, Settings.PERMPREFIX + "island.sethome")) {
                                 Island island = plugin.getGrid().getIsland(playerUUID);
                                 if (island == null) {
-                                    // plugin.getLogger().info("DEBUG: player has no island in grid");
+                                     plugin.getLogger().info("DEBUG: player has no island in grid");
                                     // Player has no island in the grid
                                     Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).errorNoIsland);
                                     return true;
@@ -2332,7 +2332,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                             Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).lockIslandLocked);
                                             // Check if this is the owner, team member or coop
                                             if (!plugin.getGrid().locationIsAtHome(player, true, warpSpot)) {
-                                                //plugin.getLogger().info("DEBUG: not at home");
+                                                plugin.getLogger().info("DEBUG: not at home");
                                                 return true;
                                             }
                                         }
@@ -2405,7 +2405,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 final UUID targetPlayerUUID = plugin.getPlayers().getUUID(split[1]);
                                 // Invited player must be known
                                 if (targetPlayerUUID == null) {
-                                    // plugin.getLogger().info("DEBUG: unknown player");
+                                     plugin.getLogger().info("DEBUG: unknown player");
                                     Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).errorUnknownPlayer);
                                     return true;
                                 }
@@ -2548,10 +2548,10 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                                 ChatColor.WHITE + "/" + label + " [accept/reject]" + ChatColor.YELLOW + " " + plugin.myLocale(invitedPlayerUUID).invitetoAcceptOrReject);
                                         // Check if the player has an island and warn
                                         // accordingly
-                                        // plugin.getLogger().info("DEBUG: invited player = "
-                                        // + invitedPlayerUUID.toString());
+                                         plugin.getLogger().info("DEBUG: invited player = "
+                                         + invitedPlayerUUID.toString());
                                         if (plugin.getPlayers().hasIsland(invitedPlayerUUID)) {
-                                            // plugin.getLogger().info("DEBUG: invited player has island");
+                                             plugin.getLogger().info("DEBUG: invited player has island");
                                             Util.sendMessage(Bukkit.getPlayer(invitedPlayerUUID), ChatColor.RED + plugin.myLocale(invitedPlayerUUID).invitewarningYouWillLoseIsland);
                                         }
                                         // Start timeout on invite
@@ -2872,7 +2872,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             } else {
                                 plugin.getMessages().setMessage(targetPlayerUUID, ChatColor.GREEN + plugin.myLocale(targetPlayerUUID).banLifted.replace("[name]", player.getName()));
                             }
-                            //OfflinePlayer offlineTarget = plugin.getServer().getOfflinePlayer(targetPlayerUUID);
+                            OfflinePlayer offlineTarget = plugin.getServer().getOfflinePlayer(targetPlayerUUID);
                             // Player
                             Util.sendMessage(player, ChatColor.GREEN + plugin.myLocale(player.getUniqueId()).banLiftedSuccess.replace("[name]", split[1]));
                             // Console
@@ -2918,7 +2918,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                     }
                                     // Try to kick player
                                     if (!removePlayerFromTeam(targetPlayer, teamLeader)) {
-                                        //Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).leaveerrorYouCannotLeaveIsland);
+                                        Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).leaveerrorYouCannotLeaveIsland);
                                         // If this is canceled, fail silently
                                         return true;
                                     }
@@ -2936,10 +2936,10 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                     // If target is online
                                     Player target = plugin.getServer().getPlayer(targetPlayer);
                                     if (target != null) {
-                                        // plugin.getLogger().info("DEBUG: player is online");
+                                         plugin.getLogger().info("DEBUG: player is online");
                                         Util.sendMessage(target, ChatColor.RED + plugin.myLocale(targetPlayer).kicknameRemovedYou.replace("[name]", player.getName()));
                                         // Clear any coop inventories
-                                        // CoopPlay.getInstance().returnAllInventories(target);
+                                         CoopPlay.getInstance().returnAllInventories(target);
                                         // Remove any of the target's coop invitees and
                                         // anyone they invited
                                         CoopPlay.getInstance().clearMyInvitedCoops(target);
@@ -2968,7 +2968,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                                 // wrong - this
                                                 // does not
                                                 // clear armor slots! So...
-                                                // plugin.getLogger().info("DEBUG: Clearing kicked player's inventory");
+                                                 plugin.getLogger().info("DEBUG: Clearing kicked player's inventory");
                                                 target.getInventory().setArmorContents(null);
                                                 target.getInventory().setHelmet(null);
                                                 target.getInventory().setChestplate(null);
@@ -2993,7 +2993,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                     plugin.getWarpSignsListener().removeWarp(targetPlayer);
                                     // Tell leader they removed the player
                                     Util.sendMessage(player, ChatColor.RED + plugin.myLocale(player.getUniqueId()).kicknameRemoved.replace("[name]", split[1]));
-                                    //removePlayerFromTeam(targetPlayer, teamLeader);
+                                    removePlayerFromTeam(targetPlayer, teamLeader);
                                     teamMembers.remove(targetPlayer);
                                     if (teamMembers.size() < 2) {
                                         if (!removePlayerFromTeam(player.getUniqueId(), teamLeader)) {
@@ -3037,8 +3037,8 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                     if (teamLeader.equals(player.getUniqueId())) {
                                         if (teamMembers.contains(targetPlayer)) {
                                             // targetPlayer is the new leader
-                                            // plugin.getLogger().info("DEBUG: " +
-                                            // plugin.getPlayers().getIslandLevel(teamLeader));
+                                             plugin.getLogger().info("DEBUG: " +
+                                             plugin.getPlayers().getIslandLevel(teamLeader));
                                             // Remove the target player from the team
                                             if (!removePlayerFromTeam(targetPlayer, teamLeader, true)) {
                                                 // If cancelled, return silently
@@ -3052,8 +3052,8 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                             Util.sendMessage(player, ChatColor.GREEN
                                                     + plugin.myLocale(player.getUniqueId()).makeLeadernameIsNowTheOwner.replace("[name]", plugin.getPlayers().getName(targetPlayer)));
 
-                                            // plugin.getLogger().info("DEBUG: " +
-                                            // plugin.getPlayers().getIslandLevel(teamLeader));
+                                             plugin.getLogger().info("DEBUG: " +
+                                             plugin.getPlayers().getIslandLevel(teamLeader));
                                             // Transfer the data from the old leader to the
                                             // new one
                                             plugin.getGrid().transferIsland(player.getUniqueId(), targetPlayer);
@@ -3202,7 +3202,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
     private void chooseIsland(Player player) {
         // Get the schematics that this player is eligible to use
         List<Schematic> schems = getSchematics(player, false);
-        //plugin.getLogger().info("DEBUG: size of schematics for this player = " + schems.size());
+        plugin.getLogger().info("DEBUG: size of schematics for this player = " + schems.size());
         if (schems.isEmpty()) {
             // No schematics - use default island
             newIsland(player);
@@ -3244,11 +3244,11 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             plugin.getPlayers().setDeaths(player.getUniqueId(), 0);
         }
         // Clear any coop inventories
-        // CoopPlay.getInstance().returnAllInventories(player);
+         CoopPlay.getInstance().returnAllInventories(player);
         // Remove any coop invitees and grab their stuff
         CoopPlay.getInstance().clearMyInvitedCoops(player);
         CoopPlay.getInstance().clearMyCoops(player);
-        //plugin.getLogger().info("DEBUG Reset command issued!");
+        plugin.getLogger().info("DEBUG Reset command issued!");
         // Remove any warps
         plugin.getWarpSignsListener().removeWarp(player.getUniqueId());
         // Delete the old island, if it exists
@@ -3257,14 +3257,14 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             // Remove any coops
             CoopPlay.getInstance().clearAllIslandCoops(oldIsland.getCenter());
             plugin.getGrid().removePlayersFromIsland(oldIsland, player.getUniqueId());
-            //plugin.getLogger().info("DEBUG Deleting old island");
+            plugin.getLogger().info("DEBUG Deleting old island");
             new DeleteIslandChunk(plugin, oldIsland);
-            //new DeleteIslandByBlock(plugin, oldIsland);
+            new DeleteIslandByBlock(plugin, oldIsland);
             // Fire event
             final IslandResetEvent event = new IslandResetEvent(player, oldIsland.getCenter());
             plugin.getServer().getPluginManager().callEvent(event);
         } else {
-            //plugin.getLogger().info("DEBUG oldisland = null!");
+            plugin.getLogger().info("DEBUG oldisland = null!");
         }
         plugin.getGrid().saveGrid();
     }
@@ -3296,7 +3296,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             }
             // Substitute in any references to player
             try {
-                //plugin.getLogger().info("Running command " + cmd + " as console.");
+                plugin.getLogger().info("Running command " + cmd + " as console.");
                 if (!Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd.replace("[player]", offlinePlayer.getName()))) {
                     Bukkit.getLogger().severe("Problem executing island command - skipping!");
                     Bukkit.getLogger().severe("Command was : " + cmd);
@@ -3503,7 +3503,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         case 0:
         case 1:
             options.add("help"); //No permission needed.
-            //options.add("make"); //Make is currently a private command never accessible to the player
+            options.add("make"); //Make is currently a private command never accessible to the player
             if (VaultHelper.checkPerm(player, Settings.PERMPREFIX + "island.go")) {
                 options.add("go");
             }
