@@ -42,8 +42,8 @@ public class ChunkGeneratorWorld extends ChunkGenerator {
 
     @SuppressWarnings("deprecation")
     public byte[][] generateBlockSections(World world, Random random, int chunkX, int chunkZ, BiomeGrid biomeGrid) {
-        // Bukkit.getLogger().info("DEBUG: world environment = " +
-        // world.getEnvironment().toString());
+         Bukkit.getLogger().info("DEBUG: world environment = " +
+         world.getEnvironment().toString());
         if (world.getEnvironment().equals(World.Environment.NETHER)) {
             return generateNetherBlockSections(world, random, chunkX, chunkZ, biomeGrid);
         }
