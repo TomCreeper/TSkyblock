@@ -479,14 +479,14 @@ public class ASkyBlockAPI {
      * @return Hashmap of owned islands with owner UUID as a key
      */
     public HashMap<UUID, Island> getOwnedIslands() {
-        //System.out.println("DEBUG: getOwnedIslands");
+        System.out.println("DEBUG: getOwnedIslands");
         if (plugin.getGrid() != null) {
             HashMap<UUID, Island> islands = plugin.getGrid().getOwnedIslands();
             if (islands != null) {
-                //plugin.getLogger().info("DEBUG: getOwnedIslands is not null");
+                plugin.getLogger().info("DEBUG: getOwnedIslands is not null");
                 return new HashMap<UUID, Island>(islands);
             }
-            //plugin.getLogger().info("DEBUG: getOwnedIslands is null");
+            plugin.getLogger().info("DEBUG: getOwnedIslands is null");
         }
         return new HashMap<UUID, Island>();
 
