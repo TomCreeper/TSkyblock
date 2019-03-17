@@ -65,7 +65,7 @@ public class AcidTask {
         if (Settings.acidItemDestroyTime > 0) {
             task = new BukkitRunnable() {
                 public void run() {
-                    //plugin.getLogger().info("DEBUG: running task every " + Settings.acidItemDestroyTime);
+                    plugin.getLogger().info("DEBUG: running task every " + Settings.acidItemDestroyTime);
                     List<Entity> entList = ASkyBlock.getIslandWorld().getEntities();
                     // Clean up the itemsInWater list
                     Set<UUID> newItemsInWater = new HashSet<>();
@@ -73,7 +73,7 @@ public class AcidTask {
                         if (current.getType() != null && current.getType().equals(EntityType.DROPPED_ITEM)) {
                             if ((current.getLocation().getBlock().getType() == Material.WATER)
                                     || (current.getLocation().getBlock().getType() == Material.STATIONARY_WATER)) {
-                                //plugin.getLogger().info("DEBUG: Item in water " + current.toString());
+                                plugin.getLogger().info("DEBUG: Item in water " + current.toString());
                                 // Check if this item was in the list last time
                                 if (itemsInWater.contains(current.getUniqueId())) {
                                     // Remove item
@@ -92,7 +92,7 @@ public class AcidTask {
                     }
                     // Clean up any items from the list that do not exist anymore
                     itemsInWater = newItemsInWater;
-                    //plugin.getLogger().info("DEBUG: items in water size = " + itemsInWater.size());
+                    plugin.getLogger().info("DEBUG: items in water size = " + itemsInWater.size());
                 }
             }.runTaskTimer(plugin, Settings.acidItemDestroyTime, Settings.acidItemDestroyTime);
         }
