@@ -691,7 +691,7 @@ public class ASLocale {
         this.localeName = localeName;
         getLocale(localeName);
         loadLocale();
-        //if (!localeName.equalsIgnoreCase("locale")) {
+        if (!localeName.equalsIgnoreCase("locale")) {
         localeObject = new Locale(localeName.substring(0, 2), localeName.substring(3, 5));
         //}       
     }
@@ -712,7 +712,7 @@ public class ASLocale {
      * @param localeName - locale to reload
      */
     public void reloadLocale(String localeName) {
-        //plugin.getLogger().info("DEBUG: loading local file " + localeName + ".yml");
+        plugin.getLogger().info("DEBUG: loading local file " + localeName + ".yml");
         // Make directory if it doesn't exist
         File localeDir = new File(plugin.getDataFolder() + File.separator + "locale");
         if (!localeDir.exists()) {
@@ -722,7 +722,7 @@ public class ASLocale {
             localeFile = new File(localeDir.getPath(), localeName + ".yml");
         }
         if (localeFile.exists()) {
-            //plugin.getLogger().info("DEBUG: File exists!");
+            plugin.getLogger().info("DEBUG: File exists!");
             locale = YamlConfiguration.loadConfiguration(localeFile);
         } else {
             // Look for defaults in the jar
@@ -730,7 +730,7 @@ public class ASLocale {
                 plugin.saveResource("locale/" + localeName + ".yml", true);
                 localeFile = new File(plugin.getDataFolder() + File.separator + "locale", localeName + ".yml");
                 locale = YamlConfiguration.loadConfiguration(localeFile);
-                //locale.setDefaults(defLocale);
+                locale.setDefaults(defLocale);
             } else {
                 plugin.getLogger().severe("Could not find locale file! " + localeName);
             }
@@ -980,7 +980,7 @@ public class ASLocale {
         challengeserrorIslandLevel = ChatColor.translateAlternateColorCodes('&',
                 locale.getString("challenges.errorIslandLevel", "Your island must be level [level] to complete this challenge!"));
         challengeserrorRewardProblem = ChatColor.translateAlternateColorCodes('&',
-                locale.getString("challenges.errorRewardProblem", "There was a problem giving your reward. Ask Admin to check log!"));
+                locale.getString("challenges.errorRewardProblem", "There was a problem giving your reward. Ask an Administrator to check the logs!"));
         challengesguiTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("challenges.guititle", "Challenges"));
         if (challengesguiTitle.length() > 30) {
             challengesguiTitle = challengesguiTitle.substring(0,29);
@@ -993,7 +993,7 @@ public class ASLocale {
         challengesmaxreached = ChatColor.translateAlternateColorCodes('&',
                 locale.getString("challenges.maxreached", "Max reached [donetimes] out of [maxtimes]"));
         islandteleport = ChatColor.translateAlternateColorCodes('&',
-                locale.getString("island.teleport", "Teleporting you to your island. (/[label] help for more info)").replace("[label]", Settings.ISLANDCOMMAND));
+                locale.getString("island.teleport", "Teleporting you to your island. (/[label] help for more information)").replace("[label]", Settings.ISLANDCOMMAND));
         islandcannotTeleport = ChatColor.translateAlternateColorCodes('&',
                 locale.getString("island.cannotTeleport", "You cannot teleport when falling!"));
         islandnew = ChatColor.translateAlternateColorCodes('&', locale.getString("island.new", "Creating a new island for you..."));
@@ -1054,7 +1054,7 @@ public class ASLocale {
         islandHelpSettings = ChatColor.translateAlternateColorCodes('&',
                 locale.getString("island.helpSettings", "see island protection and game settings"));
         islandHelpChallenges = ChatColor.translateAlternateColorCodes('&', locale.getString("island.helpChallenges", "/challenges: &fshow challenges"));
-        adminHelpHelp = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.help", "Admin Commands:"));
+        adminHelpHelp = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.help", "Administrator Commands:"));
         adminHelpName = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.name", "Set name of player's island"));
         adminHelpResetName = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.resetname", "Reset name of player's island"));
         islandHelpSelectLanguage = ChatColor.translateAlternateColorCodes('&', locale.getString("island.helpSelectLanguage", "Select Language"));
@@ -1214,7 +1214,7 @@ public class ASLocale {
         adminHelplevel = ChatColor.translateAlternateColorCodes('&',
                 locale.getString("adminHelp.level", "provide detailed island level report on player."));
         adminHelpinfoIsland = ChatColor.translateAlternateColorCodes('&',
-                locale.getString("adminHelp.infoisland", "provide info on the nearest island."));
+                locale.getString("adminHelp.infoisland", "provide information on the nearest island."));
         adminHelptp = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.tp", "Teleport to a player's island."));
         adminHelptpNether = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.tpnether", "Teleport to a player's nether island."));
         reloadconfigReloaded = ChatColor.translateAlternateColorCodes('&',
@@ -1392,8 +1392,8 @@ public class ASLocale {
         teamChatNoTeam = ChatColor.translateAlternateColorCodes('&', locale.getString("teamchat.noTeam", "You are not in a team!"));
         adminLockerrorInGame = ChatColor.translateAlternateColorCodes('&', locale.getString("adminLock.errorInGame", "Must use command in-game while on an island!"));
         errorNotOnIsland = ChatColor.translateAlternateColorCodes('&', locale.getString("error.notOnIsland", "You are not in an island space!"));
-        adminLockadminUnlockedIsland = ChatColor.translateAlternateColorCodes('&', locale.getString("adminLock.adminUnlockedIsland", "Admin unlocked your island"));
-        adminLockadminLockedIsland = ChatColor.translateAlternateColorCodes('&', locale.getString("adminLock.adminLockedIsland", "Admin locked your island"));
+        adminLockadminUnlockedIsland = ChatColor.translateAlternateColorCodes('&', locale.getString("adminLock.adminUnlockedIsland", "An Administrator unlocked your island"));
+        adminLockadminLockedIsland = ChatColor.translateAlternateColorCodes('&', locale.getString("adminLock.adminLockedIsland", "An Administrator locked your island"));
         adminTopBreedersFinding = ChatColor.translateAlternateColorCodes('&', locale.getString("adminTopBreeders.finding", "Finding top breeders..."));
         adminTopBreedersChecking = ChatColor.translateAlternateColorCodes('&', locale.getString("adminTopBreeders.checking", "Checking [number] islands..."));
         adminTopBreedersNothing = ChatColor.translateAlternateColorCodes('&', locale.getString("adminTopBreeders.nothing", "No creatures found."));
